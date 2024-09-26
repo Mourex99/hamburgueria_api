@@ -57,7 +57,7 @@ def add_cliente():
 @app.route('/clientes/<int:id>', methods=['PUT'])
 def update_cliente(id):
     data = request.get_json()
-    cliente = Cliente.query.get(id)
+    cliente = db.session.get(Cliente, id)
     if cliente:
         cliente.nome = data.get('nome', cliente.nome)
         cliente.sobrenome = data.get('sobrenome', cliente.sobrenome)
@@ -70,7 +70,7 @@ def update_cliente(id):
 
 @app.route('/clientes/<int:id>', methods=['DELETE'])
 def delete_cliente(id):
-    cliente = Cliente.query.get(id)
+    cliente = db.session.get(Cliente, id)
     if cliente:
         db.session.delete(cliente)
         db.session.commit()
