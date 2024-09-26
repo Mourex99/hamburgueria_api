@@ -1,7 +1,10 @@
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 
 app = Flask(__name__)
+
+CORS(app)
 
 # Configuração do banco de dados SQLite
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///clientes.db'
@@ -76,4 +79,3 @@ def delete_cliente(id):
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
-    

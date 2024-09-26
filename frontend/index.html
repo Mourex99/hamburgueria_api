@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hamburgueria - Clientes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Hamburgueria - Clientes</h1>
+
+    <nav>
+        <button id="btn-cadastrar" onclick="showCadastrar()">Cadastrar</button>
+        <button id="btn-clientes" onclick="showClientes()">Clientes Cadastrados</button>
+    </nav>
+
+    <!-- Seção de Cadastro -->
+    <div id="cadastrar-section">
+        <h2>Cadastrar Cliente</h2>
+        <div>
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" required>
+        </div>
+        <div>
+            <label for="sobrenome">Sobrenome:</label>
+            <input type="text" id="sobrenome" required>
+        </div>
+        <div>
+            <label for="telefone">Telefone:</label>
+            <input type="text" id="telefone" required>
+        </div>
+        <div>
+            <label for="endereco">Endereço:</label>
+            <input type="text" id="endereco" required>
+        </div>
+        <div>
+            <label for="cep">CEP:</label>
+            <input type="text" id="cep" required>
+        </div>
+        <button id="cadastrar-btn">Cadastrar</button>
+    </div>
+
+    <!-- Seção de Clientes Cadastrados -->
+    <div id="clientes-section" style="display:none;">
+        <h2>Clientes Cadastrados</h2>
+        <input type="text" id="filtro-telefone" placeholder="Buscar por telefone" onkeyup="filterClientes()">
+        <ul id="clientes-ul"></ul>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Sobrenome</th>
+                    <th>Telefone</th>
+                    <th>Endereço</th>
+                    <th>CEP</th>
+                </tr>
+            </thead>
+            <tbody id="clientes-list"></tbody>
+        </table>
+    </div>
+
+    <script src="script.js"></script> <!-- Mantenha aqui -->
+</body>
+</html>
