@@ -11,11 +11,20 @@ async function fetchClientes() {
         clientes.forEach(cliente => {
             const row = document.createElement('tr'); // Cria uma nova linha
             row.innerHTML = `
-                <td>${cliente.nome}</td>
-                <td>${cliente.sobrenome}</td>
-                <td>${cliente.telefone}</td>
-                <td>${cliente.endereco}</td>
-                <td>${cliente.cep}</td>
+                <td id="nome-${cliente.id}" contenteditable="false">${cliente.nome}</td>
+                <td id="sobrenome-${cliente.id}" contenteditable="false">${cliente.sobrenome}</td>
+                <td id="telefone-${cliente.id}" contenteditable="false">${cliente.telefone}</td>
+                <td id="endereco-${cliente.id}" contenteditable="false">${cliente.endereco}</td>
+                <td id="cep-${cliente.id}" contenteditable="false">${cliente.cep}</td>
+                <td>
+                    <div class="dropdown">
+                        <button class="dropdown-btn" onclick="toggleDropdown(this)">...</button>
+                        <div class="dropdown-content" style="display: none;">
+                            <a href="#" onclick="habilitarEdicao(${cliente.id})">Alterar Dados</a>
+                            <a href="#" onclick="deletarCliente(${cliente.id})">Deletar</a>
+                        </div>
+                    </div>
+                </td>
             `;
             clientesList.appendChild(row); // Adiciona a linha ao tbody
         });
@@ -23,6 +32,8 @@ async function fetchClientes() {
         console.error('Erro ao buscar os clientes:', error);
     }
 }
+
+window.onload = fetchClientes; // Chama a função ao carregar a página
 
 window.onload = fetchClientes; // Chama a função ao carregar a página
 
@@ -108,6 +119,161 @@ function filterClientes() {
             const telefone = telefoneCell.textContent || telefoneCell.innerText; // Obtém o texto do telefone
             // Verifica se o telefone inclui o valor do filtro
             rows[i].style.display = telefone.toLowerCase().includes(filtro) ? '' : 'none';
+        }
+    }
+}
+
+
+let originalData = {}; // Armazena os dados originais para reverter
+
+// Função para habilitar os campos de edição para um cliente específico
+function habilitarEdicao(clienteId) {
+    const fields = [
+        document.getElementById(`nome-${clienteId}`),
+        document.getElementById(`sobrenome-${clienteId}`),
+        document.getElementById(`telefone-${clienteId}`),
+        document.getElementById(`endereco-${clienteId}`),
+        document.getElementById(`cep-${clienteId}`)
+    ];
+
+    // Armazena os dados originais
+    originalData[clienteId] = fields.map(field => field.innerText);
+
+    // Habilita os campos e adiciona a classe de borda
+    fields.forEach(field => {
+        field.contentEditable = true; // Habilita a edição
+        field.classList.add('editable'); // Adiciona a classe de borda
+    });
+
+    // Altera o conteúdo do dropdown para mostrar "Salvar" e "Cancelar"
+    const dropdownContent = document.querySelector(`#nome-${clienteId}`).closest('tr').querySelector('.dropdown-content');
+    dropdownContent.innerHTML = `
+        <a href="#" onclick="salvarEdicao(${clienteId})">Salvar</a>
+        <a href="#" onclick="cancelarEdicao(${clienteId})">Cancelar</a>
+    `;
+    dropdownContent.style.display = 'block'; // Mantém o dropdown aberto
+
+    // Para evitar que o dropdown feche quando clicado
+    dropdownContent.addEventListener('click', function(event) {
+        event.stopPropagation(); // Impede que o clique se propague e feche o dropdown
+    });
+}
+
+// Função para salvar as edições de um cliente
+async function salvarEdicao(clienteId) {
+    const fields = [
+        document.getElementById(`nome-${clienteId}`),
+        document.getElementById(`sobrenome-${clienteId}`),
+        document.getElementById(`telefone-${clienteId}`),
+        document.getElementById(`endereco-${clienteId}`),
+        document.getElementById(`cep-${clienteId}`)
+    ];
+
+    // Cria um objeto com os dados atualizados do cliente
+    const clienteAtualizado = {
+        nome: fields[0].innerText,
+        sobrenome: fields[1].innerText,
+        telefone: fields[2].innerText,
+        endereco: fields[3].innerText,
+        cep: fields[4].innerText
+    };
+
+    try {
+        // Faz uma requisição PUT para atualizar o cliente
+        const response = await fetch(`http://127.0.0.1:5001/clientes/${clienteId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(clienteAtualizado)
+        });
+
+        if (response.ok) {
+            alert('Dados do cliente atualizados com sucesso!'); // Mensagem de sucesso
+            fetchClientes(); // Recarrega a lista de clientes
+        } else {
+            console.error('Erro ao atualizar o cliente:', response.statusText);
+            alert('Falha ao atualizar os dados do cliente. Tente novamente!');
+        }
+    } catch (error) {
+        console.error('Erro ao atualizar o cliente:', error);
+        alert('Falha ao atualizar os dados do cliente. Tente novamente!');
+    }
+}
+
+
+// Função para cancelar a edição e reverter para os dados originais
+function cancelarEdicao(clienteId) {
+    const fields = [
+        document.getElementById(`nome-${clienteId}`),
+        document.getElementById(`sobrenome-${clienteId}`),
+        document.getElementById(`telefone-${clienteId}`),
+        document.getElementById(`endereco-${clienteId}`),
+        document.getElementById(`cep-${clienteId}`)
+    ];
+
+    // Reverte os dados para os originais
+    fields.forEach((field, index) => {
+        field.innerText = originalData[clienteId][index]; // Reverte o texto
+        field.contentEditable = false; // Desabilita a edição
+        field.classList.remove('editable'); // Remove a classe de borda
+    });
+
+    // Altera o conteúdo do dropdown de volta para "Alterar Dados" e "Deletar"
+    const dropdownContent = document.querySelector(`#nome-${clienteId}`).closest('tr').querySelector('.dropdown-content');
+    dropdownContent.innerHTML = `
+        <a href="#" onclick="habilitarEdicao(${clienteId})">Alterar Dados</a>
+        <a href="#" onclick="deletarCliente(${clienteId})">Deletar</a>
+    `;
+
+    // Fecha o dropdown
+    dropdownContent.style.display = 'none'; // Fecha o dropdown
+}
+
+
+// Adiciona um listener para fechar o dropdown ao clicar fora
+document.addEventListener('click', function(event) {
+    const dropdowns = document.querySelectorAll('.dropdown-content');
+    dropdowns.forEach(dropdown => {
+        if (!dropdown.contains(event.target) && !event.target.classList.contains('dropdown-btn')) {
+            dropdown.style.display = 'none'; // Fecha o dropdown se clicar fora
+        }
+    });
+});
+
+// Função para alternar a exibição do dropdown
+function toggleDropdown(button) {
+    const dropdownContent = button.nextElementSibling; // Obtém o próximo elemento que é o conteúdo do dropdown
+    const isOpen = dropdownContent.style.display === 'block';
+
+    // Fecha todos os dropdowns
+    document.querySelectorAll('.dropdown-content').forEach(dropdown => {
+        dropdown.style.display = 'none'; // Fecha todos os dropdowns
+    });
+
+    // Se o dropdown não estava aberto, abre ele
+    if (!isOpen) {
+        dropdownContent.style.display = 'block'; // Abre o dropdown
+    }
+}
+
+
+// Função para deletar um cliente
+async function deletarCliente(id) {
+    if (confirm('Tem certeza que deseja deletar este cliente?')) {
+        try {
+            const response = await fetch(`http://127.0.0.1:5001/clientes/${id}`, {
+                method: 'DELETE',
+            });
+
+            if (response.ok) {
+                alert('Cliente deletado com sucesso!');
+                fetchClientes(); // Recarrega a lista de clientes
+            } else {
+                alert('Erro ao deletar o cliente.');
+            }
+        } catch (error) {
+            console.error('Erro ao deletar o cliente:', error);
         }
     }
 }

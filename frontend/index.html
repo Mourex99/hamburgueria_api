@@ -43,9 +43,9 @@
     <!-- Seção de Clientes Cadastrados -->
     <div id="clientes-section" style="display:none;">
         <h2>Clientes Cadastrados</h2>
-        <input type="text" id="filtro-telefone" placeholder="Buscar por telefone" onkeyup="filterClientes()">
-        <ul id="clientes-ul"></ul>
+        <input type="text" id="filtro-telefone" placeholder="Buscar por telefone" oninput="filterClientes()">
 
+        
         <table>
             <thead>
                 <tr>
@@ -54,10 +54,33 @@
                     <th>Telefone</th>
                     <th>Endereço</th>
                     <th>CEP</th>
+                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody id="clientes-list"></tbody>
         </table>
+    </div>
+
+    <div id="edit-form" style="display:none;">
+        <h3>Alterar Dados do Cliente</h3>
+        <form>
+            <label for="edit-nome">Nome:</label>
+            <input type="text" id="edit-nome" name="nome">
+            <br>
+            <label for="edit-sobrenome">Sobrenome:</label>
+            <input type="text" id="edit-sobrenome" name="sobrenome">
+            <br>
+            <label for="edit-telefone">Telefone:</label>
+            <input type="text" id="edit-telefone" name="telefone">
+            <br>
+            <label for="edit-endereco">Endereço:</label>
+            <input type="text" id="edit-endereco" name="endereco">
+            <br>
+            <label for="edit-cep">CEP:</label>
+            <input type="text" id="edit-cep" name="cep">
+            <br>
+            <button id="save-changes-btn" type="button">Salvar Alterações</button>
+        </form>
     </div>
 
     <script src="script.js"></script> <!-- Mantenha aqui -->

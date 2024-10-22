@@ -35,6 +35,7 @@ class Cliente(db.Model):
 with app.app_context():
     db.create_all()
 
+#Inicio da API CRUD
 @app.route('/clientes', methods=['GET'])
 def get_clientes():
     clientes = Cliente.query.all()
