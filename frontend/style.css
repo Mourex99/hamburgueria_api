@@ -1,47 +1,199 @@
-body {
-    font-family: Arial, sans-serif;
-  }
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:wght@400;700&display=swap');
 
-  table {
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #212121;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2 {
+    font-family: 'Lobster', cursive;
+    color: #ca1313;
+    text-align: center;
+    margin-top: 20px;
+}
+
+nav {
+    text-align: center;
+    margin: 20px 0;
+}
+
+nav button {
+    background-color: #ca1313;;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+nav button:hover {
+    background-color: #802b2b;
+}
+
+/* Container de formulário */
+#cadastrar-section, #clientes-section, #edit-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #333;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#cadastrar-section div, #edit-form div {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+input[type="text"] {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#cadastrar-btn, #save-changes-btn {
+    background-color: #ca1313;
+    color: #ffffff;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#cadastrar-btn:hover, #save-changes-btn:hover {
+    background-color: #802b2b;
+}
+
+/* Tabela de Clientes */
+table {
     width: 100%;
     border-collapse: collapse;
-  }
+    margin-top: 20px;
+}
 
-  th, td {
-    padding: 8px;
+table, th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-
-  th {
-    background-color: #f2f2f2;
-  }
-
-  .dropdown {
-    position: relative;
-    display: inline-block;
 }
 
+th {
+    background-color: #ca1313;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #ca1313;
+}
+
+tr:hover {
+    background-color: #802b2b;
+    color: #ffffff;
+}
+
+#filtro-telefone {
+    margin-bottom: 20px;
+    padding: 10px;
+    font-size: 16px;
+    width: calc(100% - 20px); /* Largura para caber dentro da tabela */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.highlight {
+  border: 2px solid black; /* Adiciona uma borda preta à linha em edição */
+  background-color: #f9f9f9; /* Opcional: Adiciona um leve fundo para maior contraste */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  /* Navigation Button Responsive Styles */
+  nav button {
+      padding: 8px 16px;
+      font-size: 14px;
+  }
+
+  /* Heading Responsive Styles */
+  h1, h2 {
+      font-size: 24px;
+  }
+
+  /* Input Field Responsive Styles */
+  input[type="text"], #filtro-telefone {
+      font-size: 14px;
+      padding: 8px;
+  }
+
+  /* Table Cell Responsive Styles */
+  table, th, td {
+      font-size: 12px;
+      padding: 8px;
+  }
+
+  /* Form Container Responsive Styles */
+  #cadastrar-section, #clientes-section, #edit-form {
+      padding: 15px;
+  }
+}
+
+/* Estilos gerais do dropdown */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Estilo do conteúdo do dropdown com animação suave */
 .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  opacity: 0; /* Start hidden */
+  transform: translateY(-10px); /* Position above dropdown */
+  transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth transition */
+  border-radius: 5px;
 }
 
+/* Estilo das opções do dropdown */
 .dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
+  color: #333;
+  padding: 10px 20px;
+  text-decoration: none;
+  display: block;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .dropdown-content a:hover {
-    background-color: #f1f1f1;
+  background-color: #ca1313; /* Highlight color on hover */
+  color: #fff; /* Text color on hover */
 }
 
-.editable {
-  border: 2px solid black; /* Borda preta de 2 pixels */
+/* Mostrar o dropdown com a transição */
+.dropdown:hover .dropdown-content,
+.dropdown-content.show {
+    display: block;
+    opacity: 1; /* Fully visible */
+    transform: translateY(0); /* Position at original level */
 }

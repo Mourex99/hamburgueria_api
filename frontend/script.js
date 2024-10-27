@@ -243,19 +243,25 @@ document.addEventListener('click', function(event) {
 
 // Função para alternar a exibição do dropdown
 function toggleDropdown(button) {
-    const dropdownContent = button.nextElementSibling; // Obtém o próximo elemento que é o conteúdo do dropdown
-    const isOpen = dropdownContent.style.display === 'block';
+    const dropdownContent = button.nextElementSibling; // Obtém o conteúdo do dropdown
+    const row = button.closest('tr'); // Encontra a linha associada ao botão
+    const isOpen = dropdownContent.classList.contains('show'); // Verifica se o dropdown está aberto
 
-    // Fecha todos os dropdowns
+    // Fecha todos os dropdowns e remove o destaque das linhas
     document.querySelectorAll('.dropdown-content').forEach(dropdown => {
-        dropdown.style.display = 'none'; // Fecha todos os dropdowns
+        dropdown.classList.remove('show');
+        dropdown.style.display = 'none';
     });
+    document.querySelectorAll('tr').forEach(r => r.classList.remove('highlight'));
 
-    // Se o dropdown não estava aberto, abre ele
+    // Se o dropdown não estava aberto, abre ele e destaca a linha
     if (!isOpen) {
-        dropdownContent.style.display = 'block'; // Abre o dropdown
+        dropdownContent.style.display = 'block'; // Exibe o dropdown
+        dropdownContent.classList.add('show'); // Marca o dropdown como "show" para animações
+        row.classList.add('highlight'); // Adiciona o destaque à linha
     }
 }
+
 
 
 // Função para deletar um cliente
