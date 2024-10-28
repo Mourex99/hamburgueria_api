@@ -120,10 +120,7 @@ tr:hover {
     border-radius: 5px;
 }
 
-.highlight {
-  border: 2px solid black; /* Adiciona uma borda preta à linha em edição */
-  background-color: #f9f9f9; /* Opcional: Adiciona um leve fundo para maior contraste */
-}
+
 
 /* Responsividade */
 @media (max-width: 768px) {
@@ -196,4 +193,13 @@ tr:hover {
     display: block;
     opacity: 1; /* Fully visible */
     transform: translateY(0); /* Position at original level */
+}
+
+/* Estilo dos inputs editáveis */
+.editable {
+    background-color: #333; /* Fundo escuro */
+    color: #ffffff; /* Texto branco */
+    border: 3px solid #e5ff00; /* Borda para indicar edição */
+    padding: 5px; /* Espaçamento interno */
+    outline: none; /* Remove o contorno padrão */
 }
