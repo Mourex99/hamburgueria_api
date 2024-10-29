@@ -1,7 +1,7 @@
 // Função para buscar clientes da API e exibir na página
 async function fetchClientes() {
     try {
-        const response = await fetch('http://127.0.0.1:5001/clientes'); // Faz uma requisição GET para a API
+        const response = await fetch('https://backend-api-hamburgueria-buck.vercel.app/clientes'); // Faz uma requisição GET para a API
         const clientes = await response.json(); // Converte a resposta para JSON
 
         const clientesList = document.getElementById('clientes-list');
@@ -60,7 +60,7 @@ async function cadastrarCliente() {
 
     try {
         // Faz uma requisição POST para cadastrar o cliente
-        const response = await fetch('http://127.0.0.1:5001/clientes', {
+        const response = await fetch('https://backend-api-hamburgueria-buck.vercel.app/clientes', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -180,7 +180,7 @@ async function salvarEdicao(clienteId) {
 
     try {
         // Faz uma requisição PUT para atualizar o cliente
-        const response = await fetch(`http://127.0.0.1:5001/clientes/${clienteId}`, {
+        const response = await fetch(`https://backend-api-hamburgueria-buck.vercel.app/clientes/${clienteId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -268,7 +268,7 @@ function toggleDropdown(button) {
 async function deletarCliente(id) {
     if (confirm('Tem certeza que deseja deletar este cliente?')) {
         try {
-            const response = await fetch(`http://127.0.0.1:5001/clientes/${id}`, {
+            const response = await fetch(`https://backend-api-hamburgueria-buck.vercel.app/clientes/${id}`, {
                 method: 'DELETE',
             });
 
