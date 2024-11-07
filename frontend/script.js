@@ -35,9 +35,6 @@ async function fetchClientes() {
 
 window.onload = fetchClientes; // Chama a função ao carregar a página
 
-window.onload = fetchClientes; // Chama a função ao carregar a página
-
-
 // Função para cadastrar um novo cliente na API
 async function cadastrarCliente() {
     // Coleta os dados do formulário
@@ -72,7 +69,7 @@ async function cadastrarCliente() {
         console.log('Resposta da API:', responseText); // Log para ver a resposta da API
 
         if (response.ok) {
-            // Se a requisição foi bem-sucedida, recarrega a lista de clientes
+            alert('Cliente cadastrado com sucesso!');// Se a requisição foi bem-sucedida, recarrega a lista de clientes
             fetchClientes();
         } else {
             console.error('Erro ao cadastrar o cliente:', response.statusText);
