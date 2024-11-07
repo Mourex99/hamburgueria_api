@@ -203,3 +203,20 @@ tr:hover {
     padding: 5px; /* Espaçamento interno */
     outline: none; /* Remove o contorno padrão */
 }
+
+.dropdown-btn {
+    background-color: #ffffff;
+    color: #000000;
+    border: none;
+    padding: 5px 10px; /* Reduziu o padding */
+    margin-right: 5px; /* Reduziu a margem */
+    font-size: 14px; /* Reduziu o tamanho da fonte */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Altera a cor do botão ao passar o mouse em cima */
+.dropdown-btn:hover {
+    background-color: #aca8a8; /* Cor mais clara quando o mouse passar em cima */
+}

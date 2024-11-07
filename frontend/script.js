@@ -18,7 +18,7 @@ async function fetchClientes() {
                 <td id="cep-${cliente.id}" contenteditable="false">${cliente.cep}</td>
                 <td>
                     <div class="dropdown">
-                        <button class="dropdown-btn" onclick="toggleDropdown(this)">...</button>
+                        <button class="dropdown-btn" onclick="toggleDropdown(this)">Editar</button>
                         <div class="dropdown-content" style="display: none;">
                             <a href="#" onclick="habilitarEdicao(${cliente.id})">Alterar Dados</a>
                             <a href="#" onclick="deletarCliente(${cliente.id})">Deletar</a>
